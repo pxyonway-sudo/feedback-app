@@ -109,12 +109,12 @@
     <script>
         function send(score) {
             // မိမိရလာမည့် SheetDB API URL ကို 'YOUR_API_URL' နေရာမှာ အစားထိုးပါ
-            const url = 'YOUR_API_URL'; 
+            const url = 'https://sheetdb.io/api/v1/gy272kjv0vz6jL'; 
             
             // စမ်းသပ်မှုသက်သက်ဖြစ်စေရန် Console မှာ အရင်ပြခိုင်းထားခြင်း
             console.log("ပို့လိုက်သော ရမှတ် - ", score);
 
-            if(url !== 'YOUR_API_URL') {
+            if(url !== 'https://sheetdb.io/api/v1/gy272kjv0vz6j') {
                 fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

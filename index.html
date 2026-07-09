@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Feedback Kiosk</title>
+    <style>
+        /* တစ်ကိုယ်လုံးစာ Display ပုံစံညှိခြင်း */
+        body { 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding-top: 80px; 
+            background-color: #f8fafc; 
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 42px;
+            color: #1e293b;
+            margin-bottom: 60px;
+        }
+
+        /* Emoji ခလုတ်များကို ဘေးတိုက် တန်းစီရန် Container */
+        .feedback-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ခလုတ်တစ်ခုချင်းစီ (Emoji + စာတို) အတွက် Box ပုံစံ */
+        .feedback-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            padding: 25px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            width: 140px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+
+        /* နှိပ်လိုက်ရင်ဖြစ်မယ့် Dynamic ပုံစံ */
+        .feedback-box:active {
+            transform: scale(0.92);
+            background-color: #f1f5f9;
+        }
+
+        /* Emoji အရွယ်အစား ပြင်ဆင်ခြင်း */
+        .emoji {
+            font-size: 75px;
+            margin-bottom: 15px;
+            user-select: none;
+        }
+
+        /* မြန်မာစာတိုများ၏ အလှအပ ပုံစံ */
+        .label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #475569;
+        }
+
+        /* အရောင်ခွဲခြားမှုများ (လှပစေရန်) */
+        .box-verygroup .label { color: #16a34a; } /* အလွန်ကောင်း - အစိမ်းရောင် */
+        .box-good .label { color: #ca8a04; }      /* ကောင်းတယ် - အဝါရောင် */
+        .box-medium .label { color: #ea580c; }    /* သင့်တင့် - လိမ္မော်ရောင် */
+        .box-bad .label { color: #dc2626; }       /* ညံ့တယ် - အနီရောင် */
+        .box-verybad .label { color: #7f1d1d; }   /* အလွန်ညံ့ - အနီရင့်ရောင် */
+    </style>
+</head>
+<body>
+
+    <h1>ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုကို အဆင့်သတ်မှတ်ပေးပါ</h1>
+
+    <div class="feedback-container">
+        
+        <div class="feedback-box box-verygroup" onclick="send(5)">
+            <span class="emoji">😍</span>
+            <span class="label">အလွန်ကောင်း</span>
+        </div>
+
+        <div class="feedback-box box-good" onclick="send(4)">
+            <span class="emoji">😊</span>
+            <span class="label">ကောင်းတယ်</span>
+        </div>
+
+        <div class="feedback-box box-medium" onclick="send(3)">
+            <span class="emoji">😐</span>
+            <span class="label">သင့်တင့်တယ်</span>
+        </div>
+
+        <div class="feedback-box box-bad" onclick="send(2)">
+            <span class="emoji">😞</span>
+            <span class="label">ညံ့တယ်</span>
+        </div>
+
+        <div class="feedback-box box-verybad" onclick="send(1)">
+            <span class="emoji">😡</span>
+            <span class="label">အလွန်ညံ့</span>
+        </div>
+
+    </div>
+
+    <script>
+        function send(score) {
+            // မိမိရလာမည့် SheetDB API URL ကို 'YOUR_API_URL' နေရာမှာ အစားထိုးပါ
+            const url = 'YOUR_API_URL'; 
+            
+            // စမ်းသပ်မှုသက်သက်ဖြစ်စေရန် Console မှာ အရင်ပြခိုင်းထားခြင်း
+            console.log("ပို့လိုက်သော ရမှတ် - ", score);
+
+            if(url !== 'YOUR_API_URL') {
+                fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        "data": [{ "Date": new Date().toLocaleString(), "Score": score }]
+                    })
+                }).then(() => {
+                    alert("ကျေးဇူးတင်ပါတယ်ခင်ဗျာ!");
+                }).catch(err => {
+                    alert("အင်တာနက် လိုင်းမကောင်းသဖြင့် နောက်တစ်ကြိမ် ပြန်နှိပ်ပေးပါ");
+                });
+            } else {
+                alert("ကျေးဇူးတင်ပါတယ်ခင်ဗျာ! (စမ်းသပ်မှု အောင်မြင်သည်)");
+            }
+        }
+    </script>
+
+</body>
+</html>
+
